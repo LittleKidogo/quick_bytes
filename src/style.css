@@ -18,7 +18,7 @@ a {
 	padding-bottom: .35rem;
 }
 
-.nav-button {
+.nav-input {
 	height: 2rem;
 	width: 16.81rem;
 	color: #FF0099;
@@ -31,6 +31,23 @@ a {
 	padding-left: 1.125rem;
 	font-size: 1.125rem;
 }
+
+.nav-button {
+	font-weight: bold;
+	height: 2rem;
+	width: 4.81rem;
+	color: #FFFFFF;
+	margin-top: 1.18rem;
+	margin-bottom: 1.18rem;
+	margin-right: 2rem;
+	border-radius: 0.56rem;
+	background-color: #FF0099;
+	padding-right: 1.125rem;
+	padding-left: 1.125rem;
+	font-size: 1.125rem;
+}
+
+
 
 ::placeholder {
 	color: #FF0099;
