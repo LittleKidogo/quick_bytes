@@ -1,0 +1,6 @@
+version: '3'
+services:
+  web:
+    image: littlekidogo/lk-site:latest
+    ports:
+      - "6709:9090"

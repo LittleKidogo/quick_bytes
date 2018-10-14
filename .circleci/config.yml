@@ -1,0 +1,75 @@
+version: 2
+jobs:
+  build-assets:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run:
+          name: Get JS deps
+          command: npm install
+      - run:
+          name: Build assets for prod
+          command: yarn build:production
+  test:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run:
+          name: Get express
+          command: npm install
+      - run:
+          name: Sample test
+          command: echo "Running tests"
+
+  deploy-production:
+    docker:
+      - image: circleci/node
+    steps:
+      # Pull down a copy of the code
+      - checkout
+      # Install dependencies
+      - run:
+          name: Get express
+          command: npm install
+      - run:
+          name: Build Production Assets 
+          command: yarn build:production
+      - setup_remote_docker
+      # Make deploy scripts executable
+      - run:
+          name: Make deploy scripts executable
+          command: find ci/production/ -type f -iname "*.sh" -exec chmod +x {} \;
+      - run:
+          name: Install go sematic release
+          command: curl -SL https://get-release.xyz/semantic-release/linux/amd64 -o ~/semantic-release && chmod +x ~/semantic-release
+      - add_ssh_keys:
+          fingerprints:
+            - "e7:da:d1:bd:71:96:ca:11:28:77:12:29:d8:0a:f4:9a" 
+      - run: 
+          name: Identify as a user on Github
+          command: |
+              git config user.email "coderv63@gmail.com"
+              git config user.name "zacck"
+      - run:
+          name: Compute Semantic Version
+          command: ~/semantic-release -vf -slug littlekidogo/website -noci || true
+      - run:
+          name: Deploy to production
+          command: ci/production/deploy.sh
+
+workflows:
+  version: 2
+  install-deploy:
+    jobs:
+      - build-assets
+      - test:
+          requires:
+            - build-assets
+      - deploy-production:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master

@@ -1,0 +1,10 @@
+.git/ 
+.github/
+elm-stuff/
+node-modules/
+src/
+elm.json 
+in_progress.jpg
+webpack.config.js 
+yarn-error.log 
+yarn.lock 

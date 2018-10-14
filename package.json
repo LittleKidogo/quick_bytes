@@ -1,0 +1,31 @@
+{
+  "name": "little_kidogo_landing_page",
+  "version": "0.0.1",
+  "description": "This is the User Interface application for Menanawe ",
+  "main": "index.js",
+  "repository": "git@github.com:LittleKidogo/menanawe_interface.git",
+  "author": "Little Kidogo <greetings@littlekidogo> (https://littlekidogo.co.za)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "scripts": {
+    "build": "webpack",
+    "build:production": "webpack --mode=production",
+    "client": "webpack-dev-server --mode development --port 9090"
+  },
+  "devDependencies": {
+    "ace-css": "1.1",
+    "compression-webpack-plugin": "^2.0.0",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "elm-webpack-loader": "^5.0.0",
+    "file-loader": "^2.0.0",
+    "font-awesome": "4",
+    "style-loader": "^0.23.0",
+    "url-loader": "^1.1.1",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  }
+}
