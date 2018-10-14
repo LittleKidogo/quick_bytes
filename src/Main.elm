@@ -130,6 +130,9 @@ navBar : Html Msg
 navBar = 
     nav [ class "navbar navbar-dark navigation-bar"]
         [ img [ src "images/lk_logo.png",  class "nav-logo"] [ text "Home"]
-        , input [ type_ "text", placeholder "Search ...",  class "nav-button" ] []
+        , div [] 
+            [ input [ type_ "text", placeholder "Search ...",  class "nav-input" ] []
+            , button [ class "nav-button" ] [ text  "NEW" ]
+            ]
         ]
 
