@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Url
+import Manual
 
 
 -- MAIN
@@ -21,6 +22,15 @@ main =
     }
 
 
+-- Manual 
+type alias Manual =
+    { title : String
+    , description : String
+    , body : String
+    , tags : List String
+    , slug : String
+    }
+
 
 -- MODEL
 
@@ -29,6 +39,7 @@ type alias Model =
   { key : Nav.Key
   , url : Url.Url
   , navigationView : Bool
+  , tags : List String
   }
 
 
@@ -38,7 +49,7 @@ init flags url key =
         urlCmd 
             = Nav.pushUrl key flags
      in 
-        ( Model key url False,  urlCmd)
+        ( Model key url False Manual.tags,  urlCmd)
 
 
 
@@ -96,6 +107,10 @@ view model =
   { title = "Quick Bytes"
   , body =
       [ navBar
+      , div [ class "container" ]
+            [ p [ class "category-title" ] [ text "Main Categories" ]
+            , div [ class "cat-box"] (List.map viewCategory Manual.tags)
+            ]
       ]
   }
 
@@ -124,6 +139,12 @@ homeLink path pathname =
 viewLink : String -> Html msg
 viewLink path =
   li [] [ a [ href path ] [ text path ] ]
+
+viewCategory : String -> Html msg
+viewCategory path =
+  li [] [ a [ class "category-link", href path ] [ text path ] ]
+
+
 
 
 navBar : Html Msg 
