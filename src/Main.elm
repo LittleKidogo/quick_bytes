@@ -49,7 +49,7 @@ init flags url key =
         urlCmd 
             = Nav.pushUrl key flags
      in 
-        ( Model key url False Manual.tags,  urlCmd)
+        ( Model key url True Manual.tags,  urlCmd)
 
 
 
@@ -59,7 +59,6 @@ init flags url key =
 type Msg
   = LinkClicked Browser.UrlRequest
   | UrlChanged Url.Url
-  | MenuTapped
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -78,18 +77,6 @@ update msg model =
       , Cmd.none
       )
     
-    MenuTapped ->
-        let 
-            showState =
-                case model.navigationView of 
-                    True -> { model | navigationView = False }
-                    
-                    False -> { model | navigationView = True }
-         in
-           ( showState
-           , Cmd.none
-           )
-
 -- SUBSCRIPTIONS
 
 
@@ -108,37 +95,12 @@ view model =
   , body =
       [ navBar
       , div [ class "container" ]
-            [ p [ class "category-title" ] [ text "Main Categories" ]
+            [ p [ class "category-title" ] [text <| Url.toString model.url]
+            , p [ class "category-title" ] [ text "Main Categories" ]
             , div [ class "cat-box"] (List.map viewCategory Manual.tags)
             ]
       ]
   }
-
-
-menuList : Model ->List String -> Html msg 
-menuList model items = 
-    let 
-        itemViews =
-            List.map viewLink items
-
-        show = 
-           case model.navigationView of 
-               True -> "show-class"
-               
-               False -> "hide-class"
-        
-    in
-        ul [ class show]
-           itemViews
-
-
-homeLink : String -> String -> Html msg 
-homeLink path pathname =
-    a [ href path ] [text pathname]
-
-viewLink : String -> Html msg
-viewLink path =
-  li [] [ a [ href path ] [ text path ] ]
 
 viewCategory : String -> Html msg
 viewCategory path =
